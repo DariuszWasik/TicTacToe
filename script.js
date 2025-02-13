@@ -14,9 +14,12 @@ function createPlayer(name) {
         gameboard.availableChoice.splice(index, 1);
         this.chosenSquares.push(xy);
       }
-
     }
-    return {name, chosenSquares, takeSquare}
+    const checkRows = function () {
+      if (this.chosenSquares.includes('a1', 'a2', 'a3'))
+        console.log('yeah baby')
+    }
+    return {name, chosenSquares, takeSquare, checkRows}
 }
 
 const player1 = createPlayer('dario');
@@ -38,13 +41,22 @@ const game = {
     ++this.moveInRound;
     if (this.moveInRound%2 === 1){
         let input = prompt(`${player1.name} which square do you take`)
-        player1.takeSquare(input)
+        player1.takeSquare(input);
+        player1.checkRows
       }
+      else {
+      let input = prompt(`${player2.name} which square do you take`)
+      player2.takeSquare(input)};
+    
     },
     playGame: function() {
-     this.playRound();
+     for (let i =0; i<6; i++) {
+      this.playRound()
+     }
     },
   }
+
+
 
 //3.1 players take free squares  alternately one after another - they can't take already taken square
 
