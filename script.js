@@ -17,10 +17,11 @@ function createPlayer(name) {
         gameboard.availableChoice.splice(index, 1);
         this.chosenSquares.push(xy);
       }
-    };
-    const printName = function() {
-      if((name === "dario")){
-      console.log (name)}
+      else {
+        console.log('cant find it')
+        game.playRound.input = prompt (`Try again! 
+          Available squares are ${gameboard.availableChoice}`) 
+      }
     };
 
     const checkLines = function() {
@@ -43,7 +44,7 @@ function createPlayer(name) {
     }
 
     
-    return {name, chosenSquares, takeSquare, checkLines, won, printName, points}
+    return {name, chosenSquares, takeSquare, checkLines, won, points}
 }
 
 const player1 = createPlayer('dario');
@@ -83,6 +84,7 @@ const game = {
       while ( (player1.won == false) && (player2.won == false) ) {
         this.playRound()
       }
+
       if (player1.won == true) {
         console.log(player1.points, 'player1')
         this.roundOver();
@@ -101,12 +103,14 @@ const game = {
         player2.chosenSquares = [];
         
         gameboard.availableChoice = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
-        this.roundNumber +1;
+        ++this.roundNumber;
         if ((player1.points < 3) && (player2.points < 3)){
           this.playGame()
            }
         else
-        console.log('dobra robota szefie')
+        console.log('dobra robota szefie', 
+      `${player1.name} : ${player1.points}     
+      ${player2.name} : ${player2.points}`)
       
       }
                 }
