@@ -4,6 +4,7 @@ console.log('I am working');
 //1.two players chose or enter name
 function createPlayer(name) {
     name;
+    const won = false;
     const chosenSquares = [];
     const takeSquare = function(xy) {
       console.log(`you wrote ${xy}`);
@@ -14,12 +15,55 @@ function createPlayer(name) {
         gameboard.availableChoice.splice(index, 1);
         this.chosenSquares.push(xy);
       }
+    };
+    const printName = function() {
+      if((name === "dario")){
+      console.log (name)}
+    };
+
+    const checkLines = function() {
+      if ( ((this.chosenSquares.includes('a1')) && (this.chosenSquares.includes('a2')) && this.chosenSquares.includes('a3'))
+        || ((this.chosenSquares.includes('b1')) && (this.chosenSquares.includes('b2')) && this.chosenSquares.includes('b3'))
+        || ((this.chosenSquares.includes('c1')) && (this.chosenSquares.includes('c2')) && this.chosenSquares.includes('c3'))
+        
+        || ((this.chosenSquares.includes('a1')) && (this.chosenSquares.includes('b1')) && this.chosenSquares.includes('c1'))
+        || ((this.chosenSquares.includes('a2')) && (this.chosenSquares.includes('b2')) && this.chosenSquares.includes('c2'))
+        || ((this.chosenSquares.includes('a3')) && (this.chosenSquares.includes('b3')) && this.chosenSquares.includes('c3'))
+        
+        || ((this.chosenSquares.includes('a1')) && (this.chosenSquares.includes('b2')) && this.chosenSquares.includes('c3'))
+        || ((this.chosenSquares.includes('c1')) && (this.chosenSquares.includes('b2')) && this.chosenSquares.includes('a3'))
+      
+      )
+        {
+        console.log('RRRRRRRR');
+        
+  
+      }
     }
-    const checkRows = function () {
-      if (this.chosenSquares.includes('a1', 'a2', 'a3'))
-        console.log('yeah baby')
-    }
-    return {name, chosenSquares, takeSquare, checkRows}
+
+//     const checkLines = function() {
+//       if 
+//        (this.chosenSquares.includes('a1' && 'a2' && 'a3'))
+//         // || (this.chosenSquares.includes('b1' && 'b2' && 'b3'))
+//         // || (this.chosenSquares.includes('c1' && 'c2' && 'c3'))
+       
+//         // || (this.chosenSquares.includes('a1' && 'b1' && 'c1'))
+//         // || (this.chosenSquares.includes('a2' && 'b2' && 'c2'))
+//         // || (this.chosenSquares.includes('a3' && 'b3' && 'c3'))
+
+//         // || (this.chosenSquares.includes('a1' && 'b2' && 'c3'))
+//         // || (this.chosenSquares.includes('c1' && 'b2' && 'a3'))
+      
+//         {
+//   console.log("yeah bababy", `${this.chosenSquares}`);
+//   this.won = true;
+//   // debugger
+// }
+// else {}
+
+//     }
+
+    return {name, chosenSquares, takeSquare, checkLines, won, printName}
 }
 
 const player1 = createPlayer('dario');
@@ -37,16 +81,20 @@ const gameboard = (function () {
 const game = {
   roundNumber: 0,
   moveInRound: 0,
+
   playRound: function() {
     ++this.moveInRound;
     if (this.moveInRound%2 === 1){
         let input = prompt(`${player1.name} which square do you take`)
         player1.takeSquare(input);
-        player1.checkRows
+        player1.checkLines();
+        // debugger
+      
       }
       else {
-      let input = prompt(`${player2.name} which square do you take`)
-      player2.takeSquare(input)};
+        let input = prompt(`${player2.name} which square do you take`)
+        player2.takeSquare(input)};
+        player2.checkLines();
     
     },
     playGame: function() {
