@@ -66,7 +66,7 @@ const game = {
   playRound: function() {
     
     ++this.moveInRound;
-    if (this.moveInRound%2 === 1){
+    if ((this.moveInRound + this.roundNumber)%2 !== 0){
         let input = prompt(`${player1.name} which square do you take`)
         player1.takeSquare(input);
         player1.checkLines();
@@ -93,6 +93,7 @@ const game = {
         console.log(player2.points, )
         this.roundOver();
       }
+      //draw 
       else {
         console.log ('DRAW')
         this.roundOver();
@@ -108,6 +109,7 @@ const game = {
         
         gameboard.availableChoice = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
         ++this.roundNumber;
+        this.moveInRound = 0;
         if ((player1.points < 3) && (player2.points < 3)){
           this.playGame()
            }
