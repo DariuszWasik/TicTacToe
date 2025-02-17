@@ -81,7 +81,7 @@ const game = {
       },
 
     playGame: function() {
-      while ( (player1.won == false) && (player2.won == false) ) {
+      while ( (player1.won == false) && (player2.won == false) && (gameboard.availableChoice.length !== 0)) {
         this.playRound()
       }
 
@@ -91,6 +91,10 @@ const game = {
       }
       else if (player2.won == true) {
         console.log(player2.points, )
+        this.roundOver();
+      }
+      else {
+        console.log ('DRAW')
         this.roundOver();
       } 
     },
