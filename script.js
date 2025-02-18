@@ -51,7 +51,8 @@ function createPlayer(name) {
        {
          this.won = true;
          ++this.points ;
-         console.log('RRRRRRRR');
+         console.log(player1.name, ':', player1.points);
+         console.log(player2.name, ':', player2.points);
        }
     }
 
@@ -72,32 +73,28 @@ const gameboard = (function () {
 
 //3. game logic :
 
-const game = {
-  roundNumber: 0,
-  moveInRound: 0,
+const game = (function () {
+  
+  const roundNumber =  0;
+  const moveInRound =  0;
 
-  playRound: function() {
-    
+  const playRound = function() {
     ++this.moveInRound;
     if ((this.moveInRound + this.roundNumber)%2 !== 0){
         let input = prompt(`${player1.name} which square do you take`)
         player1.takeSquare(input);
         player1.checkLines();
-        // debugger
-        
       }
       else {
         let input = prompt(`${player2.name} which square do you take`)
         player2.takeSquare(input)};
         player2.checkLines();
-    
-      },
+      };
 
-    playGame: function() {
+    const playGame = function() {
       while ( (player1.won == false) && (player2.won == false) && (gameboard.availableChoice.length !== 0)) {
         this.playRound()
       }
-
       if (player1.won == true) {
         console.log(player1.points, 'player1')
         this.roundOver();
@@ -111,59 +108,65 @@ const game = {
         console.log ('DRAW')
         this.roundOver();
       } 
-    },
+    };
     
-    roundOver: function() {
+    const roundOver = function() {
         player1.won = false;
         player2.won = false;
- 
         player1.chosenSquares = [];
         player2.chosenSquares = [];
-        
         gameboard.availableChoice = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
         ++this.roundNumber;
         this.moveInRound = 0;
         if ((player1.points < 3) && (player2.points < 3)){
           this.playGame()
            }
-           else {
+        else {
         console.log('dobra robota szefie', 
-      `${player1.name} : ${player1.points}     
-      ${player2.name} : ${player2.points}`);
-          this.gameOver();
+       `${player1.name} : ${player1.points}     
+        ${player2.name} : ${player2.points}`);
+        this.gameOver();
         }
-    },
-      gameOver: function() {
-        if (player1.points = 3){
+    };
+      
+    const gameOver = function() {
+        if (player1.points == 3){
           let msg = prompt(`${player1.name} you are the WINNER
             CONGRATULATIONS!!!
             Wanna play again?`)
             if (msg === 'yes') {
               this.reset();
               this.playGame();
-            }
-            else {
+            }}
+        else if (player2.points == 3){
+              let msg = prompt(`${player2.name} you are the WINNER
+                CONGRATULATIONS!!!
+                Wanna play again?`)
+                if (msg === 'yes') {
+                  this.reset();
+                  this.playGame();
+          }}
+        else {
               alert(`${player1.name} , ${player2.name} thank you for playing!
                 See you later!`)
             }
-
-          }
-        },
-      reset: () => {
+          };
+        
+    
+    const reset = function() {
         player1.won = false;
         player2.won = false;
-    
         player1.chosenSquares = [];
         player2.chosenSquares = [];
-        
         player1.points = 0;
         player2.points = 0;
-        
         gameboard.availableChoice = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
         game.roundNumber = 0;
         game.moveInRound = 0;
-        
       }
-   }
+      return {
+        roundNumber, moveInRound, playRound, playGame, roundOver, gameOver, reset
+      }
+   })();
 
 
