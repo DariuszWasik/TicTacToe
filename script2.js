@@ -31,6 +31,7 @@ const gameBoard = (function() {
             printNewBoard();
             return true;}
         }
+
 return {board, checkLines, printNewBoard}
 })()
 
@@ -58,14 +59,16 @@ const gameControl =(function() {
             const roundNumber = 0;
             const moveInRound = 0;
             let token = '';
-            let currentNick = ''
-        
-            let chosenX = 0;
-            let chosenY = 0;
+            const takenValues =[]
+            const acceptedValues = ['0.0', '0.1', '0.2',
+                                    '1.0', '1.1', '1.2',
+                                    '2.0', '2.1', '2.2']
+            // let currentNick = ''
+            // let chosenX = 0;
+            // let chosenY = 0;
         
             const playRound = function() {
                 ++this.moveInRound;
-                // this.checkPoints();
                 if((this.roundNumber + this.moveInRound)%2 !== 0){
                     this.token = player1.marker;
                     getChoice(player1.name)
@@ -75,7 +78,6 @@ const gameControl =(function() {
                 }
                 else{
                     gameControl.token = player2.marker;
-
                     getChoice(player2.name)
                     makeMove(player2);
                     console.log(`${player2.name} made an "${this.token}" on  gameBoard.board[${gameControl.chosenX}][${gameControl.chosenY}]}`)
@@ -85,14 +87,9 @@ const gameControl =(function() {
 
             function checkPoints(playa) {
                 if (playa.points > 2){
-                    console.log(`${playa.name} you have won the game`)
-                }
-            }
+                    console.log(`${playa.name} you have won the game`) }
+             }
             
-            const takenValues =[]
-            const acceptedValues = ['0.0', '0.1', '0.2',
-                                    '1.0', '1.1', '1.2',
-                                    '2.0', '2.1', '2.2']
 
             function checkInput(i) {
                 while(acceptedValues.includes(i)==false){
@@ -107,9 +104,8 @@ const gameControl =(function() {
                     gameControl.takenValues.push(i);
                     gameControl.chosenX = values[0];
                     gameControl.chosenY = values[1];}
-                    // debugger
                 }
-                // return this.input = i;
+
             function getChoice(nick) {
                 gameControl.currentNick = nick;
                 let input ='' 
@@ -117,7 +113,7 @@ const gameControl =(function() {
                     console.log ('its a draw')
                     gameBoard.printNewBoard()
                     gameControl.takenValues = [];
-                    this.playRound()}; 
+                    gameControl.playRound()}; 
                     input = prompt(`${nick} enter x.y`);
                 checkInput(input);
             }  
@@ -126,32 +122,24 @@ const gameControl =(function() {
                 if(gameBoard.checkLines()==true){
                     console.log('true!!!!!!!!!')
                     playa.givePoint()
-
                     checkPoints(playa);
                     gameBoard.printNewBoard()
                     gameControl.takenValues = [];
-
                 }
-                
             }
 
-            
             const makeMove = function() {
                 gameBoard.board[gameControl.chosenX][gameControl.chosenY] = gameControl.token
                 console.table(gameBoard.board)
             }
             
             const playGame = function() {
-
                 while((player1.points < 3) && (player2.points <3)){
                     this.playRound()
                 }
                 console.log('wanna play again?')
             }
-            return {moveInRound, roundNumber, token, playRound, playGame, getChoice,
-                addPointIfWon, makeMove, checkPoints, takenValues,acceptedValues
-
-}
-}
-
-)()
+    
+return {moveInRound, roundNumber, token, playGame,playRound, getChoice,
+        addPointIfWon, makeMove, checkPoints, takenValues,acceptedValues}
+})()
