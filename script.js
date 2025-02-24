@@ -9,11 +9,6 @@
 //3.5 when player reach 3 points he wins the game
 //3.6 after finish and congrats ask if player want to play again or change for different players names
 
-
-//TO DO
-//write logic for ending scenario 3.6
-
-
 function createPlayer(name) {
     name;
     const points = 0;
@@ -22,17 +17,17 @@ function createPlayer(name) {
 
     const takeSquare = function(xy) {
       console.log(`you wrote ${xy}`);
-      if (gameboard.availableChoice.includes(xy)){
+      if (gameBoard.availableChoice.includes(xy)){
         console.log('ok');
-        let index = gameboard.availableChoice.indexOf(xy);
+        let index = gameBoard.availableChoice.indexOf(xy);
         // debugger;
-        gameboard.availableChoice.splice(index, 1);
+        gameBoard.availableChoice.splice(index, 1);
         this.chosenSquares.push(xy);
       }
       else {
         console.log('cant find it')
         game.playRound.input = prompt (`Try again! 
-          Available squares are ${gameboard.availableChoice}`) 
+          Available squares are ${gameBoard.availableChoice}`) 
       }
     };
 
@@ -59,15 +54,19 @@ function createPlayer(name) {
     
     return {name, chosenSquares, takeSquare, checkLines, won, points}
 }
-
+// 1.two players chose or enter name
 const player1 = createPlayer('dario');
 const player2 = createPlayer('asia');
 
 //2. a boardgame 3x3
 
 const gameboard = (function () {
-  const board = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
-  const availableChoice = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
+  const board = ['a1', 'a2', 'a3',
+                 'b1', 'b2', 'b3',
+                 'c1', 'c2', 'c3'];
+  const availableChoice = ['a1', 'a2', 'a3',
+                           'b1', 'b2', 'b3',
+                           'c1', 'c2', 'c3'];
   return {board, availableChoice}
 })()
 
@@ -79,6 +78,7 @@ const game = (function () {
   const moveInRound =  0;
 
   const playRound = function() {
+    //player should beginn round alternately
     ++this.moveInRound;
     if ((this.moveInRound + this.roundNumber)%2 !== 0){
         let input = prompt(`${player1.name} which square do you take`)
@@ -87,12 +87,12 @@ const game = (function () {
       }
       else {
         let input = prompt(`${player2.name} which square do you take`)
-        player2.takeSquare(input)};
+        player2.takeSquare(input);
         player2.checkLines();
-      };
+      }}
 
     const playGame = function() {
-      while ( (player1.won == false) && (player2.won == false) && (gameboard.availableChoice.length !== 0)) {
+      while ( (player1.won == false) && (player2.won == false) && (gameBoard.availableChoice.length !== 0)) {
         this.playRound()
       }
       if (player1.won == true) {
@@ -115,7 +115,7 @@ const game = (function () {
         player2.won = false;
         player1.chosenSquares = [];
         player2.chosenSquares = [];
-        gameboard.availableChoice = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
+        gameBoard.availableChoice = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
         ++this.roundNumber;
         this.moveInRound = 0;
         if ((player1.points < 3) && (player2.points < 3)){
@@ -151,16 +151,15 @@ const game = (function () {
                 See you later!`)
             }
           };
-        
-    
-    const reset = function() {
+
+  const reset = function() {
         player1.won = false;
         player2.won = false;
         player1.chosenSquares = [];
         player2.chosenSquares = [];
         player1.points = 0;
         player2.points = 0;
-        gameboard.availableChoice = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
+        gameBoard.availableChoice = ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3'];
         game.roundNumber = 0;
         game.moveInRound = 0;
       }
