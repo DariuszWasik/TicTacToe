@@ -56,7 +56,7 @@ const player1 = createPlayer('dario')
 const player2 = createPlayer('asia')
 player1.marker = 'x';
 player2.marker = 'o';
-
+gameBoard.board[1][1] = 'x'
 //gameControl
 const gameControl =(function() {
             const roundNumber = 0;
@@ -140,44 +140,63 @@ const gameControl =(function() {
             }
             
             const playGame = function() {
-                score.innerText = 5;
                 drawGrid(gameBoard.board)
                 while((player1.points < 3) && (player2.points <3)){
                     this.playRound()
                 }
                 console.log('wanna play again?')
             }
+            
+            return {moveInRound, roundNumber, token, playGame,playRound, getChoice,
+                addPointIfWon, makeMove, checkPoints, takenValues,acceptedValues}
+            })()
+            
+            
+            //////////////////////////////////////////////////////////////////////////////////////////
+            let everyBtn = []
     
-return {moveInRound, roundNumber, token, playGame,playRound, getChoice,
-        addPointIfWon, makeMove, checkPoints, takenValues,acceptedValues}
-    })()
-    
-
-    //////////////////////////////////////////////////////////////////////////////////////////
-
-const display = (function() {
-    const grid = document.querySelector('.grid');
-    
-    function drawGrid(x) {
-        let el = document.createElement('button');
-        el.innerText = x;
+    const display = (function() {
+        const grid = document.querySelector('.grid');
+        
+        function drawGrid(x) {
+            let el = document.createElement('button');
+            el.innerText = x;
+        el.className = 'btnGrid'
         grid.appendChild(el);
     } 
     
     function render() {
-    grid.innerHTML = '';
-    gameBoard.board.forEach((x)=>{x.forEach((y)=>{return drawGrid(y)})})
+        grid.innerHTML = '';
+        gameBoard.board.forEach((x)=>{x.forEach((y)=>{return drawGrid(y)})})
+        everyBtn = document.querySelectorAll('.btnGrid')
+        addEventListenerToEmptyButtons();
+        console.log('zrenderowalem');
+        return everyBtn
+        
     }
-
+    let x='ddd'
+    
+    function addEventListenerToEmptyButtons(){
+        // token = gameControl.token;
+        console.log('uruchomilem iventlistnera')
+        let token = x
+        for (let x=0; x<9; x++){
+            if (everyBtn[x].innerText == ''){
+                everyBtn[x].addEventListener('click', ()=>{everyBtn[x].innerText = token})
+            }
+            else everyBtn[x].style.backgroundColor = 'red'
+        }
+        
+        
+    }
+    
     render()
-    return {render}
- 
+    
+    
+    return {render, grid, addEventListenerToEmptyButtons}
+    
 })()
 
-    // const c = document.createElement('p');
-    // c.innerText = 'siema'
-    // grid.appendChild(c)
-    
 
 
     const score = document.querySelector('.score');
