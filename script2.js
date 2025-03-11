@@ -1,5 +1,8 @@
+
+
 //create dwo dimensions array representing board
 //where row 0 is on top and column 0 is on the left
+
 const gameBoard = (function() {
         const board = [];
         const columns = 3; 
@@ -18,29 +21,29 @@ const gameBoard = (function() {
             if(((board[0][0] == board[0][1]) && (board[0][1] == board[0][2]) && (board[0][2] != ''))
             ||((board[1][0] == board[1][1]) && (board[1][1] == board[1][2]) && (board[1][2] != ''))
             ||((board[2][0] == board[2][1]) && (board[2][1] == board[2][2]) && (board[2][2] != ''))
-    
+            
             ||((board[0][0] == board[1][0]) && (board[1][0] == board[2][0]) && (board[2][0] != ''))
             ||((board[0][1] == board[1][1]) && (board[1][1] == board[2][1]) && (board[2][1] != ''))
             ||((board[0][2] == board[1][2]) && (board[1][2] == board[2][2]) && (board[2][2] != ''))
     
             ||((board[0][0] == board[1][1]) && (board[1][1] == board[2][2]) && (board[2][2] != ''))
             ||((board[2][0] == board[1][1]) && (board[1][1] == board[0][2]) && (board[0][2] != ''))
-    
+            
     
         ){
             printNewBoard();
             return true;}
         }
-
-return {board, checkLines, printNewBoard}
-})()
+        
+        return {board, checkLines, printNewBoard}
+    })()
 
 //create function factory which makes players
 function createPlayer(name) {
-            let won = false;
-            let points = 1;
-            const marker = 0;
-            function setWon () {
+    let won = false;
+    let points = 2;
+    const marker = 0;
+    function setWon () {
                 return this.won = !this.won
             };
             function givePoint () {
@@ -53,7 +56,7 @@ const player1 = createPlayer('dario')
 const player2 = createPlayer('asia')
 player1.marker = 'x';
 player2.marker = 'o';
-        
+
 //gameControl
 const gameControl =(function() {
             const roundNumber = 0;
@@ -63,12 +66,13 @@ const gameControl =(function() {
             const acceptedValues = ['0.0', '0.1', '0.2',
                                     '1.0', '1.1', '1.2',
                                     '2.0', '2.1', '2.2']
-            // let currentNick = ''
+                                    // let currentNick = ''
             // let chosenX = 0;
             // let chosenY = 0;
         
             const playRound = function() {
                 ++this.moveInRound;
+                drawGrid(gameBoard.board)
                 if((this.roundNumber + this.moveInRound)%2 !== 0){
                     this.token = player1.marker;
                     getChoice(player1.name)
@@ -115,8 +119,8 @@ const gameControl =(function() {
                     gameControl.takenValues = [];
                     gameControl.playRound()}; 
                     input = prompt(`${nick} enter x.y`);
-                checkInput(input);
-            }  
+                    checkInput(input);
+                }  
 
             function addPointIfWon (playa) {
                 if(gameBoard.checkLines()==true){
@@ -127,13 +131,17 @@ const gameControl =(function() {
                     gameControl.takenValues = [];
                 }
             }
-
+            
             const makeMove = function() {
                 gameBoard.board[gameControl.chosenX][gameControl.chosenY] = gameControl.token
-                console.table(gameBoard.board)
+                console.table(gameBoard.board);
+                drawGrid(gameBoard.board);
+                console.log(a)
             }
             
             const playGame = function() {
+                score.innerText = 5;
+                drawGrid(gameBoard.board)
                 while((player1.points < 3) && (player2.points <3)){
                     this.playRound()
                 }
@@ -142,7 +150,35 @@ const gameControl =(function() {
     
 return {moveInRound, roundNumber, token, playGame,playRound, getChoice,
         addPointIfWon, makeMove, checkPoints, takenValues,acceptedValues}
+    })()
+    
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+
+const display = (function() {
+    const grid = document.querySelector('.grid');
+    
+    function drawGrid(x) {
+        let el = document.createElement('button');
+        el.innerText = x;
+        grid.appendChild(el);
+    } 
+    
+    function render() {
+    grid.innerHTML = '';
+    gameBoard.board.forEach((x)=>{x.forEach((y)=>{return drawGrid(y)})})
+    }
+
+    render()
+    return {render}
+ 
 })()
 
-//////////////////////////////////////////////////////////////////////////////////////////
+    // const c = document.createElement('p');
+    // c.innerText = 'siema'
+    // grid.appendChild(c)
+    
 
+
+    const score = document.querySelector('.score');
+    score.innerText = 3

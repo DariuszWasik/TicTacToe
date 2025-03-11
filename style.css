@@ -1,0 +1,29 @@
+.site {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.grid {
+    /* background-color: black; */
+    width: fit-content;
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    gap: 2px;
+}
+
+.grid button {
+    
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+footer {
+    display: flex;
+    justify-content: space-around;
+}
+
