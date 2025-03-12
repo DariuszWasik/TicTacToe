@@ -4,30 +4,32 @@
 //where row 0 is on top and column 0 is on the left
 
 const gameBoard = (function() {
+        //create board as array of empty ''
+        // array elements represents the board as follow
+        // [0][1][2] 
+        // [3][4][5]
+        // [6][7][8]
+
         const board = [];
-        const columns = 3; 
-        const rows = 3;
         function printNewBoard () {
-            for (let i = 0; i < rows; i++){
-            board[i] = []
-            for (let j = 0; j < columns; j++)
-                {board[i][j] = ''}
+            for (let i = 0; i < 9; i++){
+            board[i] = ''
             }
         }
         printNewBoard()
 
         checkLines = () => {
 
-            if(((board[0][0] == board[0][1]) && (board[0][1] == board[0][2]) && (board[0][2] != ''))
-            ||((board[1][0] == board[1][1]) && (board[1][1] == board[1][2]) && (board[1][2] != ''))
-            ||((board[2][0] == board[2][1]) && (board[2][1] == board[2][2]) && (board[2][2] != ''))
+            if(((board[0] == board[1]) && (board[1] == board[2]) && (board[2] != ''))
+            ||((board[3] == board[4]) && (board[4] == board[5]) && (board[5] != ''))
+            ||((board[6] == board[7]) && (board[7] == board[8]) && (board[8] != ''))
             
-            ||((board[0][0] == board[1][0]) && (board[1][0] == board[2][0]) && (board[2][0] != ''))
-            ||((board[0][1] == board[1][1]) && (board[1][1] == board[2][1]) && (board[2][1] != ''))
-            ||((board[0][2] == board[1][2]) && (board[1][2] == board[2][2]) && (board[2][2] != ''))
+            ||((board[0] == board[3]) && (board[3] == board[6]) && (board[6] != ''))
+            ||((board[1] == board[4]) && (board[4] == board[7]) && (board[7] != ''))
+            ||((board[2] == board[5]) && (board[5] == board[8]) && (board[8] != ''))
     
-            ||((board[0][0] == board[1][1]) && (board[1][1] == board[2][2]) && (board[2][2] != ''))
-            ||((board[2][0] == board[1][1]) && (board[1][1] == board[0][2]) && (board[0][2] != ''))
+            ||((board[0] == board[4]) && (board[4] == board[8]) && (board[8] != ''))
+            ||((board[2] == board[4]) && (board[4] == board[6]) && (board[6] != ''))
             
     
         ){
@@ -56,7 +58,7 @@ const player1 = createPlayer('dario')
 const player2 = createPlayer('asia')
 player1.marker = 'x';
 player2.marker = 'o';
-gameBoard.board[1][1] = 'x'
+gameBoard.board[1] = 'x'
 //gameControl
 const gameControl =(function() {
             const roundNumber = 0;
@@ -72,7 +74,6 @@ const gameControl =(function() {
         
             const playRound = function() {
                 ++this.moveInRound;
-                drawGrid(gameBoard.board)
                 if((this.roundNumber + this.moveInRound)%2 !== 0){
                     this.token = player1.marker;
                     getChoice(player1.name)
@@ -135,12 +136,10 @@ const gameControl =(function() {
             const makeMove = function() {
                 gameBoard.board[gameControl.chosenX][gameControl.chosenY] = gameControl.token
                 console.table(gameBoard.board);
-                drawGrid(gameBoard.board);
                 console.log(a)
             }
             
             const playGame = function() {
-                drawGrid(gameBoard.board)
                 while((player1.points < 3) && (player2.points <3)){
                     this.playRound()
                 }
@@ -155,7 +154,7 @@ const gameControl =(function() {
             //////////////////////////////////////////////////////////////////////////////////////////
             let everyBtn = []
     
-    const display = (function() {
+    const scrDisplay = (function() {
         const grid = document.querySelector('.grid');
         
         function drawGrid(x) {
@@ -167,7 +166,7 @@ const gameControl =(function() {
     
     function render() {
         grid.innerHTML = '';
-        gameBoard.board.forEach((x)=>{x.forEach((y)=>{return drawGrid(y)})})
+        gameBoard.board.forEach((x)=> drawGrid(x));
         everyBtn = document.querySelectorAll('.btnGrid')
         addEventListenerToEmptyButtons();
         console.log('zrenderowalem');
@@ -183,6 +182,8 @@ const gameControl =(function() {
         for (let x=0; x<9; x++){
             if (everyBtn[x].innerText == ''){
                 everyBtn[x].addEventListener('click', ()=>{everyBtn[x].innerText = token})
+                everyBtn[x].addEventListener('click', ()=>{gameBoard.board[x]=token})
+            
             }
             else everyBtn[x].style.backgroundColor = 'red'
         }
@@ -196,7 +197,6 @@ const gameControl =(function() {
     return {render, grid, addEventListenerToEmptyButtons}
     
 })()
-
 
 
     const score = document.querySelector('.score');
