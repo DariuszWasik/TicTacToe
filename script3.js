@@ -56,22 +56,23 @@ const player1 = createPlayer('dario')
 const player2 = createPlayer('asia')
 player1.marker = 'x';
 player2.marker = 'o';
-
+gameBoard.board[1][1] = 'x'
 //gameControl
 const gameControl =(function() {
         const roundNumber = 0;
         const moveInRound = 0;
         let token = '';
-        // const takenValues =[]
-        // const acceptedValues = ['0.0', '0.1', '0.2',
-        //                         '1.0', '1.1', '1.2',
-        //                         '2.0', '2.1', '2.2']
-        //                         // let currentNick = ''
-        // // let chosenX = 0;
-        // // let chosenY = 0;
+        const takenValues =[]
+        const acceptedValues = ['0.0', '0.1', '0.2',
+                                '1.0', '1.1', '1.2',
+                                '2.0', '2.1', '2.2']
+                                // let currentNick = ''
+        // let chosenX = 0;
+        // let chosenY = 0;
     
         const playRound = function() {
             ++this.moveInRound;
+            drawGrid(gameBoard.board)
             if((this.roundNumber + this.moveInRound)%2 !== 0){
                 this.token = player1.marker;
                 getChoice(player1.name)
@@ -117,8 +118,8 @@ const gameControl =(function() {
                 gameBoard.printNewBoard()
                 gameControl.takenValues = [];
                 gameControl.playRound()}; 
-            input = prompt(`${nick} enter x.y`);
-            checkInput(input);
+                input = prompt(`${nick} enter x.y`);
+                checkInput(input);
             }  
 
         function addPointIfWon (playa) {
@@ -145,39 +146,66 @@ const gameControl =(function() {
             }
             console.log('wanna play again?')
         }
-
-return {moveInRound, roundNumber, token, playGame,playRound, getChoice,
-    addPointIfWon, makeMove, checkPoints, takenValues,acceptedValues}
-})()
-
-
-//////////////////////////////////////////////////////////////////////////////////////////
+        
+        return {moveInRound, roundNumber, token, playGame,playRound, getChoice,
+            addPointIfWon, makeMove, checkPoints, takenValues,acceptedValues}
+        })()
+        
+        
+        //////////////////////////////////////////////////////////////////////////////////////////
+        let everyBtn = []
 
 const display = (function() {
-const grid = document.querySelector('.grid');
-
-function drawGrid(x) {
-    let el = document.createElement('button');
+    const grid = document.querySelector('.grid');
+    
+    function drawGrid(x) {
+        let el = document.createElement('button');
+        el.innerText = x;
     el.className = 'btnGrid'
-    el.innerText = x;
     grid.appendChild(el);
 } 
 
 function render() {
-grid.innerHTML = '';
-gameBoard.board.forEach((x)=>{x.forEach((y)=>{return drawGrid(y)})})
+    grid.innerHTML = '';
+    gameBoard.board.forEach((x)=>{x.forEach((y)=>{ 
+        drawGrid(y);
+    })})
+    everyBtn = document.querySelectorAll('.btnGrid')
+    addEventListenerToEmptyButtons();
+    console.log('zrenderowalem');
+    return everyBtn
+    
+}
+let x='ddd'
+
+function addEventListenerToEmptyButtons(){
+    // token = gameControl.token;
+    console.log('uruchomilem iventlistnera')
+    let token = x
+    for (let x=0; x<9; x++){
+        if (everyBtn[x].innerText == ''){
+            everyBtn[x].addEventListener('click', ()=>{everyBtn[x].innerText = token})
+            everyBtn[x].addEventListener('click', ()=>{gameBoard.board[x][0]=token})
+        
+        }
+        else everyBtn[x].style.backgroundColor = 'red'
+    }
+    
+    
 }
 
-
-
-
-
 render()
-return {render, grid}
+
+
+return {render, grid, addEventListenerToEmptyButtons}
 
 })()
-
- 
+// function printNewBoard () {
+//             for (let i = 0; i < rows; i++){
+//             board[i] = []
+//             for (let j = 0; j < columns; j++)
+//                 {board[i][j] = ''}
+//             }
 
 
 const score = document.querySelector('.score');
