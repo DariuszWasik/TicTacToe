@@ -44,7 +44,7 @@ return {board, checkLines, printNewBoard}
 function createPlayer(name) {
         let won = false;
         let points = 0;
-        const marker = 0;
+        const marker = '';
         function setWon () {
             return this.won = !this.won
             };
@@ -54,8 +54,8 @@ function createPlayer(name) {
 return {points, won, marker, name, setWon, givePoint}
 }
 
-const player1 = createPlayer('dario')
-const player2 = createPlayer('asia')
+let player1 = createPlayer('dario')
+let player2 = createPlayer('asia')
 gameBoard.board[1] = ''
 player1.marker = 'x';
 player2.marker = 'o';
@@ -135,7 +135,7 @@ const gameControl =(function() {
             }
             
             const playGame = function() {
-
+                
                 if((player1.points < 3) && (player2.points <3)){
                     scrDisplay.execute()
              
@@ -159,21 +159,62 @@ return {moveInRound, changeToken, roundNumber, token, playGame, setToken,
             })()
             
     
-    const scrDisplay = (function() {
-
+            const scrDisplay = (function() {
+                
         let score1 = document.querySelector('.score1');
         let score2 = document.querySelector('.score2');
         const grid = document.querySelector('.grid');
         let everyBtn = []
-        const newNamesBtn = document.querySelector('.newNames');
+        const setNamesBtn = document.querySelector('.setNames');
         const modal = document.querySelector('dialog');
         const letsPlayBtn = document.querySelector('.letsPlay')
         const restartBtn = document.querySelector('.restart')
+        let name1 = document.querySelector('.name1')
+        let name2 = document.querySelector('.name2');
+        let nameSelected1 = document.querySelector('#player1')
+        let nameSelected2 = document.querySelector('#player2')
+        let nameText1 = document.querySelector('#player1txt')
+        let nameText2 = document.querySelector('#player2txt')
+        
+        function setNames() {
+            if ((scrDisplay.nameSelected1.value !== '') && (scrDisplay.nameText1.value == '')){
+                player1 = createPlayer(scrDisplay.nameSelected1.value)
+            }
+            else if((scrDisplay.nameSelected1.value == '') && (scrDisplay.nameText1.value == '')){
+                player1 = createPlayer('player 1')
+            }
+            else player1 = createPlayer(nameText1.value)
+            if ((scrDisplay.nameSelected2.value !== '') && (scrDisplay.nameText1.value == '')){
+                player2 = createPlayer(scrDisplay.nameSelected2.value)
+            }
+            else if((scrDisplay.nameSelected2.value == '') && (scrDisplay.nameText2.value == '')){
+                player2 = createPlayer('player 2')
+            }
+            else player2 = createPlayer(nameText2.value)
+            
+            
 
+            player1.marker = 'x';
+            player2.marker = 'o';
+        }
 
-        newNamesBtn.addEventListener('click', () => modal.showModal())
+        function printNames() {
+            name1.innerHTML = player1.name
+            name2.innerHTML = player2.name
+        }
+        
+
+        setNamesBtn.addEventListener('click', () => {
+            nameSelected1.value = ''
+            nameSelected2.value = ''
+            nameText1.value = ''
+            nameText2.value = ''
+            modal.showModal()
+            })
         
         letsPlayBtn.addEventListener('click', () =>{
+            setNames()
+            printNames()
             modal.close();
             gameControl.reset();
             gameControl.playGame()
@@ -217,15 +258,18 @@ return {moveInRound, changeToken, roundNumber, token, playGame, setToken,
         }
     }
 
-
     function execute() {
+        printNames()
         render()
         addEventListenerToEmptyButtons();
     }
 
-return {render, grid, addEventListenerToEmptyButtons, score1, score2, execute, everyBtn, modal}
+
+
+return {render, grid, addEventListenerToEmptyButtons, score1, score2, execute, everyBtn, modal,
+     nameSelected1, nameText1, name1, nameSelected2, name2, nameText2}
     
-})()
+    })()
+    
 
-
-gameControl.playGame()
+    gameControl.playGame()
