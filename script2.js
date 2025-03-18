@@ -166,7 +166,7 @@ return {moveInRound, changeToken, roundNumber, token, playGame, setToken,
         const grid = document.querySelector('.grid');
         let everyBtn = []
         const newNamesBtn = document.querySelector('.newNames');
-        const modal = document.querySelector('.modal');
+        const modal = document.querySelector('dialog');
         const letsPlayBtn = document.querySelector('.letsPlay')
         const restartBtn = document.querySelector('.restart')
 
@@ -223,7 +223,7 @@ return {moveInRound, changeToken, roundNumber, token, playGame, setToken,
         addEventListenerToEmptyButtons();
     }
 
-return {render, grid, addEventListenerToEmptyButtons, score1, score2, execute, everyBtn}
+return {render, grid, addEventListenerToEmptyButtons, score1, score2, execute, everyBtn, modal}
     
 })()
 

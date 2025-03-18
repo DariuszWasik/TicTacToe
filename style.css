@@ -27,3 +27,25 @@ footer {
     justify-content: space-around;
 }
 
+.modal {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.p1, .p2 {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+}
