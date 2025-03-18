@@ -135,6 +135,7 @@ const gameControl =(function() {
             }
             
             const playGame = function() {
+
                 if((player1.points < 3) && (player2.points <3)){
                     scrDisplay.execute()
              
@@ -143,9 +144,18 @@ const gameControl =(function() {
                 else prompt('skks')
             }
 
+            function reset() {
+                player1.points = 0;
+                player2.points = 0;
+                gameControl.roundNumber = 0;
+                gameControl.moveInRound = 0;
+                gameBoard.printNewBoard();
+                gameControl.setToken();
+            }
+
             
-return {moveInRound, changeToken, roundNumber, token, playGame,
-                addPointIfWon, checkPoints, makeMove}
+return {moveInRound, changeToken, roundNumber, token, playGame, setToken,
+                addPointIfWon, checkPoints, makeMove, reset}
             })()
             
     
@@ -155,6 +165,25 @@ return {moveInRound, changeToken, roundNumber, token, playGame,
         let score2 = document.querySelector('.score2');
         const grid = document.querySelector('.grid');
         let everyBtn = []
+        const newNamesBtn = document.querySelector('.newNames');
+        const modal = document.querySelector('.modal');
+        const letsPlayBtn = document.querySelector('.letsPlay')
+        const restartBtn = document.querySelector('.restart')
+
+
+        newNamesBtn.addEventListener('click', () => modal.showModal())
+        
+        letsPlayBtn.addEventListener('click', () =>{
+            modal.close();
+            gameControl.reset();
+            gameControl.playGame()
+        })
+        
+        restartBtn.addEventListener('click', () => {
+            gameControl.reset()
+            gameControl.playGame()
+        })
+
 
         function updatePoints() {
         score1.innerText = player1.points
