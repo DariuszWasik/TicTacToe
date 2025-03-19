@@ -179,8 +179,22 @@ const scrDisplay = (function() {
         let nameText2 = document.querySelector('#player2txt')
         let winningDialog = document.querySelector('.winning')
         let message = document.querySelector('.message')
+        const pl1display = document.querySelector('#pl1')
+        const pl2display = document.querySelector('#pl2')
 
+        
+        function activePlayer(){
+            if (gameControl.token == player1.marker){
+                console.log('x')
+                pl1display.classList.add('active')
+                pl2display.classList.remove('active')}
+                else{
+                console.log('')
+                pl2display.classList.add('active')
+                pl1display.classList.remove('active')}
 
+            }
+        
         function setNames() {
             if ((scrDisplay.nameSelected1.value !== '') && (scrDisplay.nameText1.value == '')){
                 player1 = createPlayer(scrDisplay.nameSelected1.value)
@@ -246,22 +260,23 @@ const scrDisplay = (function() {
             })
             
         function updatePoints() {
-        score1.innerText = player1.points
-        score2.innerText = player2.points
+            score1.innerText = player1.points
+            score2.innerText = player2.points
         } 
-
+        
         function drawGrid(x) {
             let el = document.createElement('button');
             el.innerText = x;
             el.className = 'btnGrid'
             grid.appendChild(el);
-    } 
-    
-    function render() {
+        } 
+        
+        function render() {
         grid.innerHTML = '';
         gameBoard.board.forEach((x)=> drawGrid(x));
         everyBtn = document.querySelectorAll('.btnGrid')
         updatePoints()
+        activePlayer()
     }
     
     function addEventListenerToEmptyButtons(){
@@ -273,7 +288,7 @@ const scrDisplay = (function() {
                 everyBtn[x].addEventListener('click', () => execute());
                 everyBtn[x].addEventListener('click', () => console.log(gameBoard.board));
             }
-            else everyBtn[x].style.backgroundColor = 'red'
+            else everyBtn[x].classList.add('active')
         }
     }
 
@@ -291,7 +306,7 @@ const scrDisplay = (function() {
 
 
 return {render, grid, addEventListenerToEmptyButtons, score1, score2, execute, everyBtn, modal,
-     nameSelected1, nameText1, name1, nameSelected2, name2, nameText2, openWinning, message}
+     nameSelected1, nameText1, name1, nameSelected2, name2, nameText2, openWinning, message, activePlayer}
     
     })()
     

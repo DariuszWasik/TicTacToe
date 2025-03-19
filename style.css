@@ -12,9 +12,8 @@
     gap: 2px;
 }
 
-.grid button {
-    
-}
+   
+
 
 header {
     display: flex;
@@ -48,4 +47,8 @@ footer {
     flex-direction: column;
     gap: 5px;
 
+}
+
+.active {
+    background-color: rgb(173, 180, 180);
 }
