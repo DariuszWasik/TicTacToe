@@ -56,7 +56,6 @@ return {points, won, marker, name, setWon, givePoint}
 
 let player1 = createPlayer('dario')
 let player2 = createPlayer('asia')
-gameBoard.board[1] = ''
 player1.marker = 'x';
 player2.marker = 'o';
 
@@ -106,7 +105,8 @@ const gameControl =(function() {
             function checkPoints(playa) {
                 if (playa.points > 2){
                     console.log('loremsaffjkahkjshdakhsajkhjkhkjkjdsjkshfdkfdjhfddfdk')
-                    scrDisplay.grid.innerHTML = '<p>`${playa.name} you have won the game`</p>' }
+                    scrDisplay.grid.innerHTML = '<div>siema</div>' 
+                    scrDisplay.openWinning(playa)}
              }
      
             function addPointIfWon(playa) {
@@ -159,23 +159,28 @@ return {moveInRound, changeToken, roundNumber, token, playGame, setToken,
             })()
             
     
-            const scrDisplay = (function() {
+const scrDisplay = (function() {
                 
         let score1 = document.querySelector('.score1');
         let score2 = document.querySelector('.score2');
-        const grid = document.querySelector('.grid');
+        let grid = document.querySelector('.grid');
         let everyBtn = []
         const setNamesBtn = document.querySelector('.setNames');
+        const restartBtn = document.querySelector('.restart')
+        const setNamesBtn2 = document.querySelector('.setNames2');
+        const restartBtn2 = document.querySelector('.restart2')
         const modal = document.querySelector('dialog');
         const letsPlayBtn = document.querySelector('.letsPlay')
-        const restartBtn = document.querySelector('.restart')
         let name1 = document.querySelector('.name1')
         let name2 = document.querySelector('.name2');
         let nameSelected1 = document.querySelector('#player1')
         let nameSelected2 = document.querySelector('#player2')
         let nameText1 = document.querySelector('#player1txt')
         let nameText2 = document.querySelector('#player2txt')
-        
+        let winningDialog = document.querySelector('.winning')
+        let message = document.querySelector('.message')
+
+
         function setNames() {
             if ((scrDisplay.nameSelected1.value !== '') && (scrDisplay.nameText1.value == '')){
                 player1 = createPlayer(scrDisplay.nameSelected1.value)
@@ -211,21 +216,35 @@ return {moveInRound, changeToken, roundNumber, token, playGame, setToken,
             nameText2.value = ''
             modal.showModal()
             })
-        
-        letsPlayBtn.addEventListener('click', () =>{
-            setNames()
-            printNames()
-            modal.close();
-            gameControl.reset();
-            gameControl.playGame()
+
+        setNamesBtn2.addEventListener('click', () => {
+            winningDialog.close()
+            nameSelected1.value = ''
+            nameSelected2.value = ''
+            nameText1.value = ''
+            nameText2.value = ''
+            modal.showModal()
         })
         
         restartBtn.addEventListener('click', () => {
             gameControl.reset()
             gameControl.playGame()
         })
-
-
+        restartBtn2.addEventListener('click', () => {
+            winningDialog.close()
+            gameControl.reset()
+            gameControl.playGame()
+        })
+            
+            
+            letsPlayBtn.addEventListener('click', () =>{
+                setNames()
+                printNames()
+                modal.close();
+                gameControl.reset();
+                gameControl.playGame()
+            })
+            
         function updatePoints() {
         score1.innerText = player1.points
         score2.innerText = player2.points
@@ -264,10 +283,15 @@ return {moveInRound, changeToken, roundNumber, token, playGame, setToken,
         addEventListenerToEmptyButtons();
     }
 
+    function openWinning(x) {
+        winningDialog.showModal()
+        scrDisplay.message.textContent = `${x.name} you have won! Congratulations!`
+
+    }
 
 
 return {render, grid, addEventListenerToEmptyButtons, score1, score2, execute, everyBtn, modal,
-     nameSelected1, nameText1, name1, nameSelected2, name2, nameText2}
+     nameSelected1, nameText1, name1, nameSelected2, name2, nameText2, openWinning, message}
     
     })()
     
