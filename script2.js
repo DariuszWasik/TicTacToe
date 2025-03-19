@@ -79,16 +79,6 @@ const gameControl =(function() {
                 }
             }
 
-            // const playRound = function() {
-            //     if ((moveInRound)%2 == 0){
-            //         setToken()
-            //         console.log('00', token)
-            //     }
-            //     else {
-            //         changeToken()
-            //         console.log('01', gameControl.token)
-            //     }
-            // }
             
             function makeMove() {
                 ++moveInRound;
@@ -104,14 +94,11 @@ const gameControl =(function() {
 
             function checkPoints(playa) {
                 if (playa.points > 2){
-                    console.log('loremsaffjkahkjshdakhsajkhjkhkjkjdsjkshfdkfdjhfddfdk')
-                    scrDisplay.grid.innerHTML = '<div>siema</div>' 
                     scrDisplay.openWinning(playa)}
              }
      
             function addPointIfWon(playa) {
                 if(gameBoard.checkLines()==true){
-                    console.log('true!!!!!!!!!')
                     ++gameControl.roundNumber;
                     moveInRound = 0;
                     playa.givePoint();
@@ -121,13 +108,11 @@ const gameControl =(function() {
                     checkPoints(playa);
                 }
                 else if ((gameBoard.checkLines() == false) && (!gameBoard.board.includes(''))){
-                    console.log('its a draw')
                     ++gameControl.roundNumber;
                     moveInRound = 0;
                     gameBoard.printNewBoard();
                     setToken();
                     scrDisplay.execute()
-                    // changeToken()
                 }
                 else {
                     changeToken()
@@ -135,13 +120,9 @@ const gameControl =(function() {
             }
             
             const playGame = function() {
-                
                 if((player1.points < 3) && (player2.points <3)){
                     scrDisplay.execute()
-             
-                   // playRound()
                 }
-                else prompt('skks')
             }
 
             function reset() {
