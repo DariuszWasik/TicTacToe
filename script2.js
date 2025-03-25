@@ -102,6 +102,7 @@ const gameControl =(function() {
                     ++gameControl.roundNumber;
                     moveInRound = 0;
                     playa.givePoint();
+                    
                     gameBoard.printNewBoard();
                     setToken();
                     scrDisplay.execute()
@@ -139,7 +140,7 @@ return {moveInRound, changeToken, roundNumber, token, playGame, setToken,
                 addPointIfWon, checkPoints, makeMove, reset}
             })()
             
-    
+//screen Display logic  in Iffy  
 const scrDisplay = (function() {
                 
         let score1 = document.querySelector('.score1');
@@ -191,8 +192,6 @@ const scrDisplay = (function() {
                 player2 = createPlayer('player 2')
             }
             else player2 = createPlayer(nameText2.value)
-            
-            
 
             player1.marker = 'x';
             player2.marker = 'o';
@@ -203,7 +202,6 @@ const scrDisplay = (function() {
             name2.innerHTML = player2.name
         }
         
-
         setNamesBtn.addEventListener('click', () => {
             nameSelected1.value = ''
             nameSelected2.value = ''
@@ -229,35 +227,34 @@ const scrDisplay = (function() {
             winningDialog.close()
             gameControl.reset()
             gameControl.playGame()
+    })
+        
+        letsPlayBtn.addEventListener('click', () =>{
+            setNames()
+            printNames()
+            modal.close();
+            gameControl.reset();
+            gameControl.playGame()
         })
-            
-            
-            letsPlayBtn.addEventListener('click', () =>{
-                setNames()
-                printNames()
-                modal.close();
-                gameControl.reset();
-                gameControl.playGame()
-            })
-            
-        function updatePoints() {
-            score1.innerText = player1.points
-            score2.innerText = player2.points
-        } 
         
-        function drawGrid(x) {
-            let el = document.createElement('button');
-            el.innerText = x;
-            el.className = 'btnGrid'
-            grid.appendChild(el);
-        } 
-        
-        function render() {
-        grid.innerHTML = '';
-        gameBoard.board.forEach((x)=> drawGrid(x));
-        everyBtn = document.querySelectorAll('.btnGrid')
-        updatePoints()
-        activePlayer()
+    function updatePoints() {
+        score1.innerText = player1.points
+        score2.innerText = player2.points
+    } 
+    
+    function drawGrid(x) {
+        let el = document.createElement('button');
+        el.innerText = x;
+        el.className = 'btnGrid'
+        grid.appendChild(el);
+    } 
+    
+    function render() {
+    grid.innerHTML = '';
+    gameBoard.board.forEach((x)=> drawGrid(x));
+    everyBtn = document.querySelectorAll('.btnGrid')
+    updatePoints()
+    activePlayer()
     }
     
     function addEventListenerToEmptyButtons(){
@@ -285,11 +282,9 @@ const scrDisplay = (function() {
 
     }
 
-
 return {render, grid, addEventListenerToEmptyButtons, score1, score2, execute, everyBtn, modal,
      nameSelected1, nameText1, name1, nameSelected2, name2, nameText2, openWinning, message, activePlayer}
-    
-    })()
-    
 
-    gameControl.playGame()
+})()
+    
+gameControl.playGame()
