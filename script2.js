@@ -161,19 +161,17 @@ const scrDisplay = (function() {
         let nameText2 = document.querySelector('#player2txt')
         let winningDialog = document.querySelector('.winning')
         let message = document.querySelector('.message')
-        const pl1display = document.querySelector('#pl1')
-        const pl2display = document.querySelector('#pl2')
 
         
         function activePlayer(){
             if (gameControl.token == player1.marker){
                 console.log('x')
-                pl1display.classList.add('active')
-                pl2display.classList.remove('active')}
+                name1.classList.add('active')
+                name2.classList.remove('active')}
                 else{
                 console.log('')
-                pl2display.classList.add('active')
-                pl1display.classList.remove('active')}
+                name2.classList.add('active')
+                name1.classList.remove('active')}
 
             }
         
@@ -277,7 +275,7 @@ const scrDisplay = (function() {
     }
 
     function openWinning(x) {
-        winningDialog.show()
+        winningDialog.showModal()
         scrDisplay.message.textContent = `${x.name} you have won! Congratulations!`
 
     }
