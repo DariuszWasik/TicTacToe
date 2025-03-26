@@ -230,8 +230,8 @@ const scrDisplay = (function() {
     })
         
         letsPlayBtn.addEventListener('click', () =>{
-            setNames()
-            printNames()
+            setNames();
+            printNames();
             modal.close();
             gameControl.reset();
             gameControl.playGame()
@@ -277,7 +277,7 @@ const scrDisplay = (function() {
     }
 
     function openWinning(x) {
-        winningDialog.showModal()
+        winningDialog.show()
         scrDisplay.message.textContent = `${x.name} you have won! Congratulations!`
 
     }
