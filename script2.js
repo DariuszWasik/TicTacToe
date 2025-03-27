@@ -166,12 +166,12 @@ const scrDisplay = (function() {
         function activePlayer(){
             if (gameControl.token == player1.marker){
                 console.log('x')
-                name1.classList.add('active')
-                name2.classList.remove('active')}
+                name1.classList.add('activePL')
+                name2.classList.remove('activePL')}
                 else{
                 console.log('')
-                name2.classList.add('active')
-                name1.classList.remove('active')}
+                name2.classList.add('activePL')
+                name1.classList.remove('activePL')}
 
             }
         
